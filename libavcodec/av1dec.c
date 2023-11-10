@@ -541,6 +541,7 @@ static int get_pixel_format(AVCodecContext *avctx)
                      CONFIG_AV1_NVDEC_HWACCEL + \
                      CONFIG_AV1_VAAPI_HWACCEL + \
                      CONFIG_AV1_VDPAU_HWACCEL + \
+                     CONFIG_AV1_VIDEOTOOLBOX_HWACCEL + \
                      CONFIG_AV1_VULKAN_HWACCEL)
     enum AVPixelFormat pix_fmts[HWACCEL_MAX + 2], *fmtp = pix_fmts;
 
@@ -568,6 +569,9 @@ static int get_pixel_format(AVCodecContext *avctx)
 #if CONFIG_AV1_VDPAU_HWACCEL
         *fmtp++ = AV_PIX_FMT_VDPAU;
 #endif
+#if CONFIG_AV1_VIDEOTOOLBOX_HWACCEL
+        *fmtp++ = AV_PIX_FMT_VIDEOTOOLBOX;
+#endif
 #if CONFIG_AV1_VULKAN_HWACCEL
         *fmtp++ = AV_PIX_FMT_VULKAN;
 #endif
@@ -591,6 +595,9 @@ static int get_pixel_format(AVCodecContext *avctx)
 #endif
 #if CONFIG_AV1_VDPAU_HWACCEL
         *fmtp++ = AV_PIX_FMT_VDPAU;
+#endif
+#if CONFIG_AV1_VIDEOTOOLBOX_HWACCEL
+        *fmtp++ = AV_PIX_FMT_VIDEOTOOLBOX;
 #endif
 #if CONFIG_AV1_VULKAN_HWACCEL
         *fmtp++ = AV_PIX_FMT_VULKAN;
@@ -1580,6 +1587,9 @@ const FFCodec ff_av1_decoder = {
 #endif
 #if CONFIG_AV1_VDPAU_HWACCEL
         HWACCEL_VDPAU(av1),
+#endif
+#if CONFIG_AV1_VIDEOTOOLBOX_HWACCEL
+        HWACCEL_VIDEOTOOLBOX(av1),
 #endif
 #if CONFIG_AV1_VULKAN_HWACCEL
         HWACCEL_VULKAN(av1),
